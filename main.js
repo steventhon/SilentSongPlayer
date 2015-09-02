@@ -16,3 +16,9 @@ var song2 = new song("Title2", "Artist", "Album");
 var song3 = new song("Title3", "Artist", "Album");
 var song4 = new song("Title4", "Artist", "Album");
 var song5 = new song("Title5", "Artist", "Album");
+
+song1.add();
+song2.add();
+song3.add();
+song4.add();
+song5.add();
