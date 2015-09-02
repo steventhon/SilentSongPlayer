@@ -22,3 +22,16 @@ song2.add();
 song3.add();
 song4.add();
 song5.add();
+
+for (var i = 0, len = playlist.length, obj; i < len; i++) {
+  do {
+    obj = playlist[Math.floor(Math.random() * len)];
+  } while (obj.played === true);
+  
+  obj.played = true;
+  
+  for (var x in obj) {
+    if (x !== "add" && x !== "played")
+      console.log(x + ": " + obj[x]);
+  }
+}
