@@ -1,6 +1,6 @@
 $(document).ready(function() {
   var playlist = [];
-  var shuffle, prev, next;
+  var shuffle, prev, next, curr = 0;
   
   // Song constructor
   function Song(title, artist, album) {
@@ -28,6 +28,15 @@ $(document).ready(function() {
   song3.add();
   song4.add();
   song5.add();
+  
+  // Play the Song
+  function playSong() {
+    var obj = playlist[curr];
+    for (var x in obj) {
+      if (x !== "add" && x !== "played")
+        console.log(x + ": " + obj[x]);
+    }
+  }
   
   // Plays Songs in random order without repeats
   for (var i = 0, len = playlist.length, obj; i < len; i++) {
