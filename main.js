@@ -1,5 +1,5 @@
 var playlist = [];
-var shuffle, prev = 0, curr = 0;
+var shuffle, prev = 0, curr = 0, numPlayed = 0;
 
 // Song constructor
 function Song(title, artist, album) {
@@ -27,11 +27,16 @@ song2.add();
 song3.add();
 song4.add();
 song5.add();
+// Append Songs stored from session storage
+for (var i = 0, storage = sessionStorage.length; i < storage; i++) {
+  var getStored = sessionStorage.getItem(i);
+  playlist.push(JSON.parse(getStored));
+}
 
 // Play the Song
 function playSong() {
   var obj = playlist[curr];
-
+  numPlayed++;
   for (var x in obj) {
       if (x !== "add" && x !== "played") {
         var thing = document.getElementById(x);
@@ -43,7 +48,9 @@ function playSong() {
 // Play next Song
 function playNext() {
   prev = curr;
-  if (shuffle)
+  if (!numPlayed)
+    playSong();
+  else if (shuffle)
     playRandom();
   else {
     curr++;
@@ -78,4 +85,20 @@ function playRandom() {
     curr = Math.floor(Math.random() * playlist.length)
   } while (curr === prev)
   playSong();
+}
+
+// Add a Song to session storage
+function addSong() {
+  var para = document.getElementById("addSongText");
+  var addTitle = document.getElementById("title").value;
+  var addArtist = document.getElementById("artist").value;
+  var addAlbum = document.getElementById("album").value;
+  if (addTitle && addArtist && addAlbum) {
+    var song = new Song(addTitle, addArtist, addAlbum);
+    song.add();
+    sessionStorage.setItem(sessionStorage.length, JSON.stringify(song));
+    para.innerHTML = "Song " + JSON.stringify(song) + " added!";
+  }
+  else
+    para.innerHTML = "Please fill all fields";
 }
